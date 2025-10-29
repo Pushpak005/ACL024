@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="styles.css"/>
 </head>
 <body class="bg">
-
   <div class="phone">
     <header class="topbar">
       <div class="topbar-left">
@@ -19,6 +18,7 @@
 
     <main class="content">
 
+      <!-- Brand / clock -->
       <section class="panel brand">
         <div class="brand-row">
           <h1>Healthy Diet</h1>
@@ -27,23 +27,17 @@
         <div class="now" id="clock">--:--</div>
       </section>
 
+      <!-- Health snapshot -->
       <section class="panel">
         <h3>Your Health Snapshot</h3>
-        <div id="riskBanner" class="banner" hidden>⚠️ Your vitals suggest a high‑risk pattern. Please prefer light, low‑sodium items or request a human review.</div>
+        <div id="riskBanner" class="banner" hidden>
+          ⚠️ Your vitals suggest a high-risk pattern. Please prefer light, low-sodium items or request a human review.
+        </div>
 
         <div class="metrics">
-          <div class="metric">
-            <div class="label">Heart Rate</div>
-            <div class="value" id="m-hr">--</div>
-          </div>
-          <div class="metric">
-            <div class="label">Steps</div>
-            <div class="value" id="m-steps">--</div>
-          </div>
-          <div class="metric">
-            <div class="label">Calories</div>
-            <div class="value" id="m-cals">--</div>
-          </div>
+          <div class="metric"><div class="label">Heart Rate</div><div class="value" id="m-hr">--</div></div>
+          <div class="metric"><div class="label">Steps</div><div class="value" id="m-steps">--</div></div>
+          <div class="metric"><div class="label">Calories</div><div class="value" id="m-cals">--</div></div>
         </div>
 
         <button class="pill w100" id="toggleDetails">More Health Details ▾</button>
@@ -53,11 +47,12 @@
           <div>🏃 Activity Level: <b id="d-activity">–</b></div>
           <div>⏱ Last Sync: <b id="d-time">–</b></div>
           <div class="muted small" style="margin-top:8px">
-            Data source: <b id="data-source">wearable_stream.json (demo)</b>. Only used on your device unless you consent otherwise.
+            Data source: <b id="data-source">wearable_stream.json (demo)</b>.
           </div>
         </div>
       </section>
 
+      <!-- Today’s Picks -->
       <section class="panel">
         <div class="row-between">
           <h3>Today’s Picks</h3>
@@ -72,7 +67,9 @@
           <button class="chip" id="nextBtn">Next ▶</button>
         </div>
 
-        <p class="foot">Lifestyle guidance only. Not clinical advice. Each card shows its <b>provenance</b> (data/model source).</p>
+        <p class="foot">
+          Lifestyle guidance only. Not clinical advice.
+        </p>
       </section>
 
     </main>
@@ -80,13 +77,18 @@
 
   <script src="app.js" defer></script>
   <script>
-    // Restore login/preferences gating
+    // Login / preferences gating
     const user = JSON.parse(localStorage.getItem('user') || 'null');
     if (!user) window.location.href = 'login.html';
     const prefs = JSON.parse(localStorage.getItem('prefs') || 'null');
     if (!prefs || !prefs.diet) window.location.href = 'preferences.html';
+
     document.getElementById('helloName').textContent = user?.name || 'Friend';
-    window.addEventListener('DOMContentLoaded', () => window.APP_BOOT && window.APP_BOOT());
+    window.__APP_PREFS = prefs; // make prefs available globally
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (window.APP_BOOT) window.APP_BOOT();
+    });
   </script>
 </body>
 </html>
