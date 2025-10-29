@@ -1,0 +1,53 @@
+[
+  {
+    "name": "Cloud Khichdi (Baner)",
+    "city": "Pune",
+    "area": "Baner",
+    "dishes": [
+      {
+        "title": "Tofu & Veggie Stir-fry",
+        "price": 220,
+        "description": "Fresh tofu stir-fried with seasonal veggies.",
+        "payment_link": "https://pay.example.com/order/ck1"
+      },
+      {
+        "title": "Moong Dal Khichdi (Satvik)",
+        "price": 150,
+        "description": "Comforting satvik khichdi.",
+        "payment_link": "https://pay.example.com/order/ck2"
+      }
+    ]
+  },
+  {
+    "name": "Chhavi's Kitchen (Wakad)",
+    "city": "Pune",
+    "area": "Wakad",
+    "dishes": [
+      {
+        "title": "Paneer Tikka Salad",
+        "price": 180,
+        "description": "Grilled paneer with mixed greens.",
+        "payment_link": "https://pay.example.com/order/ch1"
+      },
+      {
+        "title": "Tofu & Veggie Stir-fry",
+        "price": 210,
+        "description": "Spicy tofu stir fry.",
+        "payment_link": "https://pay.example.com/order/ch2"
+      }
+    ]
+  },
+  {
+    "name": "The Biryani Dabba (Ravet)",
+    "city": "Pune",
+    "area": "Ravet",
+    "dishes": [
+      {
+        "title": "Grilled Chicken & Quinoa Bowl",
+        "price": 260,
+        "description": "Protein rich bowl.",
+        "payment_link": "https://pay.example.com/order/bd1"
+      }
+    ]
+  }
+]

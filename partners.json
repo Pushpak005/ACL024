@@ -1,0 +1,285 @@
+[
+  {
+    "id": "saladoclock",
+    "name": "Salad O'Clock",
+    "areas": [
+      "Baner",
+      "Wakad",
+      "Hinjewadi"
+    ],
+    "phone": "8956477397",
+    "website": "https://saladoclock.com",
+    "order_url": "https://saladoclock.com/order",
+    "logo": "/assets/saladoclock.png",
+    "type": "healthy",
+    "commission_percent": 10,
+    "notes": "Healthy bowls; delivers Baner/Wakad/Hinjewadi"
+  },
+  {
+    "id": "fooddarzee",
+    "name": "Food Darzee",
+    "areas": [
+      "Pune"
+    ],
+    "phone": "9590510520",
+    "website": "https://fooddarzee.com",
+    "order_url": "https://fooddarzee.com/order",
+    "logo": "/assets/fooddarzee.png",
+    "type": "diet",
+    "commission_percent": 12,
+    "notes": "Diet-specific/ketogenic meals"
+  },
+  {
+    "id": "healthychef",
+    "name": "HealthyChef",
+    "areas": [
+      "Pune"
+    ],
+    "phone": "9990025974",
+    "website": "https://www.healthychefindia.com",
+    "order_url": "https://www.healthychefindia.com/order",
+    "logo": "/assets/healthychef.png",
+    "type": "healthy",
+    "commission_percent": 12,
+    "notes": "Personalised meal service"
+  },
+  {
+    "id": "ascloud",
+    "name": "AS Cloud Kitchen",
+    "areas": [
+      "Hinjewadi"
+    ],
+    "phone": "6395261029",
+    "website": "https://www.zomato.com/pune/as-cloud-kitchen-hinjewadi",
+    "order_url": "https://www.zomato.com/pune/as-cloud-kitchen-hinjewadi",
+    "logo": "/assets/ascloud.png",
+    "type": "cloud",
+    "commission_percent": 10,
+    "notes": "Hinjewadi cloud kitchen listing"
+  },
+  {
+    "id": "thecloudbaner",
+    "name": "The Cloud Kitchen (Baner)",
+    "areas": [
+      "Baner"
+    ],
+    "phone": "9561510967",
+    "website": "https://www.example.com",
+    "order_url": "https://www.example.com/order",
+    "logo": "/assets/cloudbaner.png",
+    "type": "cloud",
+    "commission_percent": 10,
+    "notes": "Local Baner kitchen"
+  },
+  {
+    "id": "grroots",
+    "name": "Groots Cowork / Groots Coworking (F&B partners)",
+    "areas": [
+      "Baner"
+    ],
+    "phone": "8857865539",
+    "website": "https://www.grootscowork.com",
+    "order_url": "https://www.grootscowork.com/contact",
+    "logo": "/assets/groots.png",
+    "type": "shared_kitchen",
+    "commission_percent": 8,
+    "notes": "Shared kitchen & small F&B partners"
+  },
+  {
+    "id": "speedkitchen",
+    "name": "Speed Kitchen (cloud kitchen setup)",
+    "areas": [
+      "Kharadi",
+      "Hinjewadi"
+    ],
+    "phone": "",
+    "website": "https://speedkitchen.in",
+    "order_url": "https://speedkitchen.in/contact",
+    "logo": "/assets/speedkitchen.png",
+    "type": "setup",
+    "commission_percent": 0,
+    "notes": "Service to find shared kitchen slots"
+  },
+  {
+    "id": "venturecenter_kitchen",
+    "name": "Venture Center (lab/kitchen leads)",
+    "areas": [
+      "Pune"
+    ],
+    "phone": "",
+    "website": "https://www.venturecenter.co.in",
+    "order_url": "https://www.venturecenter.co.in",
+    "logo": "/assets/venturecenter.png",
+    "type": "incubator",
+    "commission_percent": 0,
+    "notes": "Incubator — good for prototyping/partnerships"
+  },
+  {
+    "id": "chhavi_kitchen",
+    "name": "Chhavi's Kitchen (Wakad)",
+    "areas": [
+      "Wakad"
+    ],
+    "phone": "",
+    "website": "https://www.example.com",
+    "order_url": "https://www.example.com/order",
+    "logo": "/assets/chhavi.png",
+    "type": "shared",
+    "commission_percent": 10,
+    "notes": "Local Wakad kitchen listing"
+  },
+  {
+    "id": "cloudkhichdi",
+    "name": "Cloud Khichdi (Baner)",
+    "areas": [
+      "Baner"
+    ],
+    "phone": "",
+    "website": "https://www.zomato.com",
+    "order_url": "https://www.zomato.com",
+    "logo": "/assets/cloudkhichdi.png",
+    "type": "cloud",
+    "commission_percent": 10,
+    "notes": "Baner cloud kitchen"
+  },
+  {
+    "id": "broki",
+    "name": "Broki (space listings)",
+    "areas": [
+      "Pune"
+    ],
+    "phone": "",
+    "website": "https://www.broki.in",
+    "order_url": "https://www.broki.in",
+    "logo": "/assets/broki.png",
+    "type": "marketplace",
+    "commission_percent": 0,
+    "notes": "Leads for kitchen spaces to rent or sub-lease"
+  },
+  {
+    "id": "smergers",
+    "name": "Smergers (cloud kitchen assets)",
+    "areas": [
+      "Pune"
+    ],
+    "phone": "",
+    "website": "https://www.smergers.com",
+    "order_url": "https://www.smergers.com",
+    "logo": "/assets/smergers.png",
+    "type": "marketplace",
+    "commission_percent": 0,
+    "notes": "Buy/sell/lease cloud kitchen assets"
+  },
+  {
+    "id": "biryani_dabba",
+    "name": "The Biryani Dabba (cloud)",
+    "areas": [
+      "Pune"
+    ],
+    "phone": "9970550590",
+    "website": "https://www.instagram.com/thebiryanidabba",
+    "order_url": "https://www.instagram.com/thebiryanidabba",
+    "logo": "/assets/biryanidabba.png",
+    "type": "cloud",
+    "commission_percent": 12,
+    "notes": "Local cloud brand with Instagram contact"
+  },
+  {
+    "id": "felfel",
+    "name": "Felfel Kitchen (shared)",
+    "areas": [
+      "Pune"
+    ],
+    "phone": "",
+    "website": "https://www.justdial.com",
+    "order_url": "https://www.justdial.com",
+    "logo": "/assets/felfel.png",
+    "type": "shared",
+    "commission_percent": 10,
+    "notes": "Shared kitchen aggregator listing"
+  },
+  {
+    "id": "baostory",
+    "name": "Bao Story Base Kitchen",
+    "areas": [
+      "Pune"
+    ],
+    "phone": "",
+    "website": "https://www.justdial.com",
+    "order_url": "https://www.justdial.com",
+    "logo": "/assets/baostory.png",
+    "type": "shared",
+    "commission_percent": 10,
+    "notes": "Shared kitchen listing"
+  },
+  {
+    "id": "kitchen_equip",
+    "name": "KitchenEquip / Alister (equipment)",
+    "areas": [
+      "Pune"
+    ],
+    "phone": "9525252786",
+    "website": "https://www.example.com",
+    "order_url": "https://www.example.com/contact",
+    "logo": "/assets/kitchenequip.png",
+    "type": "supplier",
+    "commission_percent": 0,
+    "notes": "Kitchen equipment supplier"
+  },
+  {
+    "id": "groovespace",
+    "name": "Grooves (cloud kitchen space Hinjewadi)",
+    "areas": [
+      "Hinjewadi"
+    ],
+    "phone": "",
+    "website": "https://www.99acres.com",
+    "order_url": "https://www.99acres.com",
+    "logo": "/assets/groovespace.png",
+    "type": "space",
+    "commission_percent": 0,
+    "notes": "Cloud kitchen space leads"
+  },
+  {
+    "id": "magicpin_baner",
+    "name": "Magicpin listings (Baner)",
+    "areas": [
+      "Baner"
+    ],
+    "phone": "9561510967",
+    "website": "https://www.magicpin.in",
+    "order_url": "https://www.magicpin.in",
+    "logo": "/assets/magicpin.png",
+    "type": "aggregator",
+    "commission_percent": 0,
+    "notes": "Aggregator listing leads"
+  },
+  {
+    "id": "local_shared_wakad",
+    "name": "Local Shared Kitchens (Wakad)",
+    "areas": [
+      "Wakad"
+    ],
+    "phone": "",
+    "website": "https://www.justdial.com",
+    "order_url": "https://www.justdial.com",
+    "logo": "/assets/shared_wakad.png",
+    "type": "shared",
+    "commission_percent": 10,
+    "notes": "Search Justdial for Wakad shared kitchens"
+  },
+  {
+    "id": "cloud_ravet",
+    "name": "Cloud Kitchen (Ravet)",
+    "areas": [
+      "Ravet"
+    ],
+    "phone": "",
+    "website": "https://www.zomato.com",
+    "order_url": "https://www.zomato.com",
+    "logo": "/assets/cloud_ravet.png",
+    "type": "cloud",
+    "commission_percent": 10,
+    "notes": "Ravet cloud kitchen listing"
+  }
+]

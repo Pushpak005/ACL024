@@ -1,0 +1,208 @@
+[
+  {
+    "title": "Grilled Chicken & Quinoa Bowl",
+    "hero": "Chicken Quinoa",
+    "type": "nonveg",
+    "tags": [
+      "high-protein-snack",
+      "low-carb",
+      "light-clean"
+    ],
+    "link": "https://www.zomato.com/bangalore?query=grilled%20chicken%20quinoa",
+    "provenance": "Partner menus; macros via OpenFoodFacts (approx). Reasoning: AI Assistant v2 (rules).",
+    "partners": [
+      {
+        "partnerId": "cloud_ravet",
+        "partnerName": "Cloud Kitchen (Ravet)",
+        "price": 199,
+        "order_url": "https://www.zomato.com",
+        "availableAreas": [
+          "Ravet"
+        ]
+      },
+      {
+        "partnerId": "fooddarzee",
+        "partnerName": "Food Darzee",
+        "price": 149,
+        "order_url": "https://fooddarzee.com/order",
+        "availableAreas": [
+          "Pune"
+        ]
+      },
+      {
+        "partnerId": "smergers",
+        "partnerName": "Smergers (cloud kitchen assets)",
+        "price": 179,
+        "order_url": "https://www.smergers.com",
+        "availableAreas": [
+          "Pune"
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Paneer Tikka Salad",
+    "hero": "Paneer Salad",
+    "type": "veg",
+    "tags": [
+      "high-protein-snack",
+      "low-carb",
+      "light-clean"
+    ],
+    "link": "https://www.swiggy.com/search?query=paneer%20tikka%20salad",
+    "provenance": "Partner menus; macros via OpenFoodFacts (approx). Reasoning: AI Assistant v2 (rules).",
+    "partners": [
+      {
+        "partnerId": "ascloud",
+        "partnerName": "AS Cloud Kitchen",
+        "price": 179,
+        "order_url": "https://www.zomato.com/pune/as-cloud-kitchen-hinjewadi",
+        "availableAreas": [
+          "Hinjewadi"
+        ]
+      },
+      {
+        "partnerId": "felfel",
+        "partnerName": "Felfel Kitchen (shared)",
+        "price": 249,
+        "order_url": "https://www.justdial.com",
+        "availableAreas": [
+          "Pune"
+        ]
+      },
+      {
+        "partnerId": "kitchen_equip",
+        "partnerName": "KitchenEquip / Alister (equipment)",
+        "price": 249,
+        "order_url": "https://www.example.com/contact",
+        "availableAreas": [
+          "Pune"
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Moong Dal Khichdi (Satvik)",
+    "hero": "Satvik Khichdi",
+    "type": "veg",
+    "tags": [
+      "satvik",
+      "light-clean",
+      "low-sodium"
+    ],
+    "link": "https://www.swiggy.com/search?query=moong%20dal%20khichdi",
+    "provenance": "Traditional Satvik recipes; macros via OpenFoodFacts (approx). Reasoning: AI Assistant v2 (rules).",
+    "partners": [
+      {
+        "partnerId": "kitchen_equip",
+        "partnerName": "KitchenEquip / Alister (equipment)",
+        "price": 149,
+        "order_url": "https://www.example.com/contact",
+        "availableAreas": [
+          "Pune"
+        ]
+      },
+      {
+        "partnerId": "venturecenter_kitchen",
+        "partnerName": "Venture Center (lab/kitchen leads)",
+        "price": 199,
+        "order_url": "https://www.venturecenter.co.in",
+        "availableAreas": [
+          "Pune"
+        ]
+      },
+      {
+        "partnerId": "broki",
+        "partnerName": "Broki (space listings)",
+        "price": 229,
+        "order_url": "https://www.broki.in",
+        "availableAreas": [
+          "Pune"
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Grilled Fish with Greens",
+    "hero": "Grilled Fish",
+    "type": "nonveg",
+    "tags": [
+      "high-protein-snack",
+      "light-clean",
+      "low-sodium"
+    ],
+    "link": "https://www.zomato.com/bangalore?query=grilled%20fish%20greens",
+    "provenance": "Partner menus; macros via OpenFoodFacts (approx). Reasoning: AI Assistant v2 (rules).",
+    "partners": [
+      {
+        "partnerId": "venturecenter_kitchen",
+        "partnerName": "Venture Center (lab/kitchen leads)",
+        "price": 179,
+        "order_url": "https://www.venturecenter.co.in",
+        "availableAreas": [
+          "Pune"
+        ]
+      },
+      {
+        "partnerId": "ascloud",
+        "partnerName": "AS Cloud Kitchen",
+        "price": 229,
+        "order_url": "https://www.zomato.com/pune/as-cloud-kitchen-hinjewadi",
+        "availableAreas": [
+          "Hinjewadi"
+        ]
+      },
+      {
+        "partnerId": "fooddarzee",
+        "partnerName": "Food Darzee",
+        "price": 199,
+        "order_url": "https://fooddarzee.com/order",
+        "availableAreas": [
+          "Pune"
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Greek Yogurt & Berry Cup",
+    "hero": "Yogurt Cup",
+    "type": "veg",
+    "tags": [
+      "low-calorie-dessert",
+      "high-protein-snack"
+    ],
+    "link": "https://www.swiggy.com/search?query=greek%20yogurt%20berries",
+    "provenance": "Packaged product labels; macros via OpenFoodFacts (approx). Reasoning: AI Assistant v2 (rules).",
+    "partners": [
+      {
+        "partnerId": "healthychef",
+        "partnerName": "HealthyChef",
+        "price": 249,
+        "order_url": "https://www.healthychefindia.com/order",
+        "availableAreas": [
+          "Pune"
+        ]
+      },
+      {
+        "partnerId": "saladoclock",
+        "partnerName": "Salad O'Clock",
+        "price": 249,
+        "order_url": "https://saladoclock.com/order",
+        "availableAreas": [
+          "Baner",
+          "Wakad",
+          "Hinjewadi"
+        ]
+      },
+      {
+        "partnerId": "baostory",
+        "partnerName": "Bao Story Base Kitchen",
+        "price": 229,
+        "order_url": "https://www.justdial.com",
+        "availableAreas": [
+          "Pune"
+        ]
+      }
+    ]
+  }
+]
