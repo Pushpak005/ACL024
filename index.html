@@ -17,36 +17,33 @@
       <a class="icon-btn" href="preferences.html" aria-label="Preferences">⚙️</a>
     </header>
 
-    <main>
+    <main class="content">
       <section class="panel brand">
         <div class="brand-row">
           <h1>Healthy Diet</h1>
           <p class="tag">Simple • Friendly • Fast</p>
         </div>
-        <div class="now" id="clock">13:06</div>
+        <div class="now" id="clock">--:--</div>
       </section>
 
       <section class="panel">
         <h3>Your Health Snapshot</h3>
         <div id="riskBanner" class="banner" hidden>
-          ⚠️ Your vitals suggest a high-risk pattern. Please prefer light, low-sodium items or request a human review.
+          ⚠️ Your vitals suggest a high-risk pattern. Please prefer light, low-sodium items.
         </div>
 
         <div class="metrics">
-          <div class="metric"><div class="label">Heart Rate</div><div class="value" id="m-hr">82</div></div>
-          <div class="metric"><div class="label">Steps</div><div class="value" id="m-steps">5230</div></div>
-          <div class="metric"><div class="label">Calories</div><div class="value" id="m-cals">340</div></div>
+          <div class="metric"><div class="label">Heart Rate</div><div class="value" id="m-hr">--</div></div>
+          <div class="metric"><div class="label">Steps</div><div class="value" id="m-steps">--</div></div>
+          <div class="metric"><div class="label">Calories</div><div class="value" id="m-cals">--</div></div>
         </div>
 
-        <button class="pill w100" id="toggleDetails">More Health Details ▾</button>
+        <button class="pill w100" id="toggleDetails">More Details ▾</button>
         <div class="details" id="healthDetails" hidden>
-          <div>🔥 Calories Burned: <b id="d-burned">120</b></div>
-          <div>🩸 Blood Pressure: <b id="d-bp">120/78</b></div>
-          <div>🏃 Activity Level: <b id="d-activity">Moderate</b></div>
-          <div>⏱ Last Sync: <b id="d-time">13:05</b></div>
-          <div class="muted small" style="margin-top:8px">
-            Data source: <b id="data-source">wearable_stream.json (demo)</b>.
-          </div>
+          <div>🔥 Calories Burned: <b id="d-burned">–</b></div>
+          <div>🩸 Blood Pressure: <b id="d-bp">–</b></div>
+          <div>🏃 Activity Level: <b id="d-activity">–</b></div>
+          <div>⏱ Last Sync: <b id="d-time">–</b></div>
         </div>
       </section>
 
@@ -56,9 +53,7 @@
           <button class="linklike" id="reshuffle">More Picks ▾</button>
         </div>
 
-        <ul id="cards" class="cards">
-          <!-- cards injected by app.js -->
-        </ul>
+        <ul id="cards" class="cards"></ul>
 
         <div class="nav-ctr">
           <button class="chip" id="prevBtn">◀ Prev</button>
@@ -70,25 +65,26 @@
           Lifestyle guidance only. Not clinical advice.
         </p>
       </section>
-
     </main>
   </div>
 
   <script src="app.js" defer></script>
   <script>
-    // Restore login/preferences gating
+    // ✅ Gating: user & preferences must exist
     const user = JSON.parse(localStorage.getItem('user') || 'null');
-    if (!user) window.location.href = 'login.html';
     const prefs = JSON.parse(localStorage.getItem('prefs') || 'null');
-    if (!prefs || !prefs.diet) window.location.href = 'preferences.html';
-    document.getElementById('helloName').textContent = user?.name || 'Friend';
 
-    // expose prefs to global so app.js functions can read city/diet
-    window.__APP_PREFS = prefs;
-
-    window.addEventListener('DOMContentLoaded', () => {
-      if (window.APP_BOOT) window.APP_BOOT();
-    });
+    if (!user) {
+      window.location.href = 'login.html';
+    } else if (!prefs || !prefs.diet) {
+      window.location.href = 'preferences.html';
+    } else {
+      document.getElementById('helloName').textContent = user.name || 'Friend';
+      window.__APP_PREFS = prefs;
+      window.addEventListener('DOMContentLoaded', () => {
+        if (window.APP_BOOT) window.APP_BOOT();
+      });
+    }
   </script>
 </body>
 </html>
