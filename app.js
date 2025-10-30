@@ -1,20 +1,18 @@
-// app.js — main frontend logic for homepage + health + DeepSeek smart recommendations
+// app.js — fixed DeepSeek + wearable + UI
 
 (() => {
   const state = {
     wearable: {},
     partners: [],
     catalog: [],
-    page: 0,
-    pageSize: 6
   };
 
-  function esc(s){ return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]); )}
+  const esc = s => String(s || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 
-  // -------- Load wearable health metrics ----------
+  // ---- Wearable ----
   async function loadWearable() {
     try {
-      const res = await fetch('wearable_stream.json');
+      const res = await fetch('./wearable_stream.json');
       const w = await res.json();
       state.wearable = w;
       document.getElementById('m-hr').textContent = w.heartRate || '--';
@@ -24,27 +22,27 @@
       document.getElementById('d-bp').textContent = w.bp || '--';
       document.getElementById('d-activity').textContent = w.activityLevel || '--';
       document.getElementById('d-time').textContent = w.lastSync || '--';
-    } catch (e) {
-      console.error('Wearable load failed', e);
+    } catch (err) {
+      console.error('Wearable load error', err);
     }
   }
 
-  // -------- Load partner menus ----------
+  // ---- Partners ----
   async function loadPartners() {
     try {
-      const r = await fetch('partners.json');
+      const r = await fetch('./partners.json');
       state.partners = await r.json();
-    } catch (e) {
-      console.error('Partners load failed', e);
+    } catch (err) {
+      console.error('Partners load error', err);
       state.partners = [];
     }
   }
 
-  // -------- Smart DeepSeek recommendation ----------
+  // ---- DeepSeek Smart Picks ----
   async function loadSmartRecommendations() {
     const prefs = window.__APP_PREFS || JSON.parse(localStorage.getItem('prefs') || '{}');
-    const wearable = state.wearable || {};
-    const partners = state.partners || [];
+    const wearable = state.wearable;
+    const partners = state.partners;
 
     try {
       const resp = await fetch('/.netlify/functions/recommend_similar', {
@@ -52,56 +50,51 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ wearable, prefs, partners, topN: 6 })
       });
-      const j = await resp.json();
-      state.catalog = Array.isArray(j.picks) ? j.picks : [];
-    } catch (e) {
-      console.error('Smart recommendations failed', e);
+      const data = await resp.json();
+      state.catalog = data.picks || [];
+    } catch (err) {
+      console.error('DeepSeek recommend failed', err);
       state.catalog = [];
     }
   }
 
-  // -------- UI render ----------
-  function buildCard(it) {
-    const city = esc(it.city || 'Pune');
-    const orderHref = `order.html?dish=${encodeURIComponent(it.title)}&city=${encodeURIComponent(city)}`;
-    return `
-      <li class="card">
-        <div class="tile">${esc(it.partner || '')}</div>
-        <div class="pad">
-          <div class="title">${esc(it.title)}</div>
-          <div class="meta">${esc(it.description || '')}</div>
-          ${it.reason ? `<div class="whybox">${esc(it.reason)}</div>` : ''}
-          <a href="${orderHref}" target="_blank" class="pill">🛒 Order Now</a>
-        </div>
-      </li>`;
-  }
-
-  function renderCatalog() {
+  // ---- Render cards ----
+  function renderCards() {
     const root = document.getElementById('cards');
     root.innerHTML = '';
     if (!state.catalog.length) {
-      root.innerHTML = `<li class="card"><div class="pad">No recommendations yet. Click "✨ Get Picks".</div></li>`;
+      root.innerHTML = `<li class="card"><div class="pad">No dishes yet. Click "✨ Get Picks".</div></li>`;
       return;
     }
     for (const item of state.catalog) {
-      root.insertAdjacentHTML('beforeend', buildCard(item));
+      root.insertAdjacentHTML('beforeend', `
+        <li class="card">
+          <div class="tile">${esc(item.partner)}</div>
+          <div class="pad">
+            <div class="title">${esc(item.title)}</div>
+            <div class="meta">${esc(item.description || '')}</div>
+            <div class="whybox">${esc(item.reason || '')}</div>
+            <a class="pill" href="order.html?dish=${encodeURIComponent(item.title)}" target="_blank">🛒 Order Now</a>
+          </div>
+        </li>
+      `);
     }
   }
 
-  // -------- Buttons ----------
-  document.getElementById('getPicks')?.addEventListener('click', async () => {
-    await loadPartners();
-    await loadWearable();
-    await loadSmartRecommendations();
-    renderCatalog();
-  });
-
+  // ---- Events ----
   document.getElementById('toggleDetails')?.addEventListener('click', () => {
     const d = document.getElementById('healthDetails');
     d.hidden = !d.hidden;
   });
 
-  // -------- Boot --------
+  document.getElementById('getPicks')?.addEventListener('click', async () => {
+    await loadPartners();
+    await loadWearable();
+    await loadSmartRecommendations();
+    renderCards();
+  });
+
+  // ---- Boot ----
   window.APP_BOOT = async () => {
     await loadWearable();
     await loadPartners();
