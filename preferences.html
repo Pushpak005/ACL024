@@ -10,14 +10,13 @@
   <div class="phone">
     <header class="topbar">
       <div class="topbar-left">
-        <span class="avatar">🧑‍⚕️</span>
+        <span class="avatar">🍽️</span>
         <span class="uname">Preferences</span>
       </div>
     </header>
 
     <main class="pad">
-      <h2>Select your preferences</h2>
-
+      <h2>Set your Preferences</h2>
       <div class="card">
         <label>Diet Type</label>
         <div class="row gap8 mt6">
@@ -25,34 +24,25 @@
           <button id="nonveg" class="pill">Non-Veg</button>
         </div>
 
-        <label style="margin-top:12px">City</label>
-        <input id="city" placeholder="City (e.g. Pune)" style="margin-top:8px;width:100%;"/>
+        <label style="margin-top:12px;">City</label>
+        <input id="city" placeholder="City (e.g. Pune)" style="width:100%;margin-top:8px;"/>
 
-        <div style="margin-top:16px">
-          <button id="save" class="pill w100">Save & Continue</button>
-        </div>
+        <button id="save" class="pill w100" style="margin-top:14px;">Save & Continue</button>
       </div>
     </main>
   </div>
 
   <script>
-    const cityInput = document.getElementById('city');
+    let prefs = JSON.parse(localStorage.getItem('prefs') || '{}');
     const veg = document.getElementById('veg');
     const nonveg = document.getElementById('nonveg');
-    const save = document.getElementById('save');
-
-    let prefs = JSON.parse(localStorage.getItem('prefs') || '{}');
-    if(prefs.city) cityInput.value = prefs.city;
-    if(prefs.diet==='veg') veg.classList.add('active');
-    if(prefs.diet==='nonveg') nonveg.classList.add('active');
 
     veg.onclick = ()=>{ prefs.diet='veg'; veg.classList.add('active'); nonveg.classList.remove('active'); };
     nonveg.onclick = ()=>{ prefs.diet='nonveg'; nonveg.classList.add('active'); veg.classList.remove('active'); };
 
-    save.onclick = ()=>{
-      const city = cityInput.value.trim() || 'Pune';
+    document.getElementById('save').onclick = ()=>{
+      prefs.city = document.getElementById('city').value.trim() || 'Pune';
       if(!prefs.diet){ alert('Please choose Vegetarian or Non-Veg'); return; }
-      prefs.city = city;
       localStorage.setItem('prefs', JSON.stringify(prefs));
       window.location.href = 'index.html';
     };
