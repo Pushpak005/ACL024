@@ -17,23 +17,19 @@
 
     <main class="pad">
       <h2>Welcome to Healthy Diet</h2>
-      <p class="muted">Enter your name to continue:</p>
-
+      <p class="muted">Please enter your name to continue.</p>
       <div class="card">
-        <input id="name" placeholder="Your name" style="width:100%;padding:8px;font-size:1rem;"/>
+        <input id="name" placeholder="Your name" style="width:100%;padding:8px;"/>
         <button id="loginBtn" class="pill w100" style="margin-top:10px;">Continue</button>
       </div>
     </main>
   </div>
 
   <script>
-    const nameInput = document.getElementById('name');
-    const btn = document.getElementById('loginBtn');
-
-    btn.onclick = ()=>{
-      const name = nameInput.value.trim();
+    document.getElementById('loginBtn').onclick = ()=>{
+      const name = document.getElementById('name').value.trim();
       if(!name){ alert('Please enter your name'); return; }
-      localStorage.setItem('user', JSON.stringify({name}));
+      localStorage.setItem('user', JSON.stringify({ name }));
       window.location.href = 'preferences.html';
     };
   </script>
