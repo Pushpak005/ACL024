@@ -1,41 +1,51 @@
-
 (function(){
-  function qs(name){ const u = new URLSearchParams(location.search); return u.get(name); }
-  const dish = qs('dish') || 'Dish';
+  function qs(n){ return new URLSearchParams(location.search).get(n); }
+  const dish = qs('dish') || '';
   const city = qs('city') || 'Pune';
-  document.getElementById('title').textContent = `Order: ${dish}`;
-  async function load() {
+  document.getElementById('title').textContent = `Order: ${dish || 'Dish'}`;
+
+  async function load(){
     try {
-      const resp = await fetch('pune_menus.json');
-      const data = await resp.json();
-      // find restaurants in that city offering this dish (case-insensitive match)
-      const matches = data.filter(r => (r.city||'').toLowerCase()===city.toLowerCase() && r.dishes && r.dishes.some(d=>d.title.toLowerCase().includes(dish.toLowerCase())));
-      const container = document.getElementById('content');
-      container.innerHTML = '';
-      if (matches.length===0) {
-        container.innerHTML = `<p>No local partners in ${city} found for "<strong>${dish}</strong>".<br/>Showing web search instead.</p>
-        <p><a class="pill" href="https://www.google.com/search?q=${encodeURIComponent(dish+' '+city+' order online')}" target="_blank">Search web for ${dish}</a></p>`;
+      let data = [];
+      try { data = await fetch('partners.json').then(r=>r.ok? r.json(): []); } catch(e){ try{ data = await fetch('pune_menus.json').then(r=>r.ok? r.json(): []); } catch(_){ data = []; } }
+
+      const c = document.getElementById('content');
+      c.innerHTML = '';
+
+      const matches = data
+        .filter(p => !p.city || p.city.toLowerCase() === city.toLowerCase())
+        .map(p => {
+          const found = (p.dishes||[]).filter(d => d.title && d.title.toLowerCase().includes((dish||'').toLowerCase()));
+          return found.length ? { partner: p, dishes: found } : null;
+        }).filter(Boolean);
+
+      if(matches.length === 0){
+        c.innerHTML = `<p>No partner serves <b>${escapeHtml(dish)}</b> in ${escapeHtml(city)}.</p>
+          <p><a class="pill" href="https://www.google.com/search?q=${encodeURIComponent(dish+' '+city+' order online')}" target="_blank">Search web</a></p>`;
         return;
       }
-      for (const r of matches) {
-        const card = document.createElement('div');
-        card.className='card';
-        let html = `<div class="tile">${escapeHtml(r.name)} — ${escapeHtml(r.area||'')}</div>`;
-        html += `<div style="padding:8px">`;
-        for (const d of r.dishes.filter(d=>d.title.toLowerCase().includes(dish.toLowerCase()))) {
-          html += `<div><strong>${escapeHtml(d.title)}</strong> — ₹${escapeHtml(String(d.price))} <br/>${escapeHtml(d.description||'')}</div>`;
-          if (d.payment_link) html += `<div style="margin-top:6px"><a class="pill" target="_blank" href="${escapeHtml(d.payment_link)}">Pay / Order</a></div>`;
-          html += `<hr/>`;
+
+      for(const m of matches){
+        const div = document.createElement('div');
+        div.className = 'card';
+        let html = `<div class="tile">${escapeHtml(m.partner.name)} — ${escapeHtml(m.partner.area||'')}</div>`;
+        html += '<div style="padding:8px">';
+        for(const d of m.dishes){
+          html += `<div><strong>${escapeHtml(d.title)}</strong> — ₹${escapeHtml(String(d.price || 'N/A'))}<br/>${escapeHtml(d.description||'')}</div>`;
+          if(d.payment_link) html += `<div style="margin-top:6px"><a class="pill" target="_blank" href="${escapeHtml(d.payment_link)}">Pay / Order</a></div>`;
+          html += '<hr/>';
         }
-        html += `</div>`;
-        card.innerHTML = html;
-        container.appendChild(card);
+        html += '</div>';
+        div.innerHTML = html;
+        c.appendChild(div);
       }
-    } catch (e) {
+    } catch(e){
       document.getElementById('content').textContent = 'Failed to load menu data';
       console.error(e);
     }
   }
-  function escapeHtml(s){ return String(s).replace(/[&<>"']/g, function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];}); }
+
+  function escapeHtml(s){ return String(s || '').replace(/[&<>"']/g, function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];}); }
+
   load();
 })();
