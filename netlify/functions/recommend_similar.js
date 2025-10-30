@@ -1,11 +1,11 @@
 // netlify/functions/recommend_similar.js
-// Simple smart recommender using DeepSeek chat.
-// Finds most similar dishes from your partner menus based on a "seed" dish or user health context.
+// Smart simple recommender using DeepSeek chat
+// Picks the most similar dishes from partner menus (e.g., if Tofu missing -> Paneer)
 
 import fetch from "node-fetch";
 
 const DEEPSEEK_BASE = "https://api.deepseek.com/v1";
-const MODEL = "deepseek-chat"; // adjust if your model name differs
+const MODEL = "deepseek-chat"; // change if your model name differs
 
 async function deepseekChat(prompt) {
   const resp = await fetch(`${DEEPSEEK_BASE}/chat/completions`, {
@@ -17,8 +17,8 @@ async function deepseekChat(prompt) {
     body: JSON.stringify({
       model: MODEL,
       messages: [{ role: "user", content: prompt }],
-      temperature: 0.2,
-      max_tokens: 700
+      temperature: 0.3,
+      max_tokens: 800
     })
   });
   const data = await resp.json();
@@ -30,14 +30,14 @@ export const handler = async (event) => {
     const body = JSON.parse(event.body || "{}");
     const { wearable = {}, prefs = {}, partners = [], seedDish = "", topN = 6 } = body;
 
-    // Flatten all partner dishes
+    // Flatten partner dishes
     const dishes = [];
     for (const p of partners || []) {
       for (const d of p.dishes || []) {
         dishes.push({
           title: d.title || "",
           description: d.description || "",
-          price: d.price || null,
+          price: d.price || "",
           partner: p.name || "",
           city: p.city || "",
         });
@@ -47,43 +47,37 @@ export const handler = async (event) => {
     if (!dishes.length)
       return { statusCode: 200, body: JSON.stringify({ picks: [] }) };
 
-    // Build smart prompt for DeepSeek
-    const query = `
+    // Build smart DeepSeek prompt
+    const prompt = `
 User preferences:
 - Diet: ${prefs.diet || "unknown"}
 - City: ${prefs.city || "unknown"}
 - Health: HR=${wearable.heartRate || "--"}, BP=${wearable.bp || "--"}, Activity=${wearable.activityLevel || "--"}
-${seedDish ? `\nPrimary recommended dish: ${seedDish}` : ""}
----
 
-Below is the list of dishes available from our restaurant partners.
-Select up to ${topN} dishes that are most relevant, healthy, and similar in spirit.
-If a tofu dish isn't available, suggest a paneer or other protein-based option.
-Prefer dishes that fit the user’s diet type.
-Return ONLY a JSON array:
-[{"title":"","partner":"","city":"","price":"","reason":""}]
+Goal:
+Recommend up to ${topN} dishes ONLY from the list below that are healthy and suitable for the user's context.
+If tofu is not available, recommend paneer or other similar protein-rich items.
+If chicken missing, suggest egg/fish alternatives.
+Return strictly JSON array: [{"title":"","partner":"","city":"","price":"","reason":""}]
 ---
 
 Available dishes:
 ${dishes.map((d,i)=>`${i+1}. ${d.title} - ${d.partner} - ${d.city} - ${d.description || ""}`).join("\n")}
 `;
 
-    const text = await deepseekChat(query);
+    const text = await deepseekChat(prompt);
 
-    // Parse JSON
     let picks = [];
     try {
       picks = JSON.parse(text);
     } catch {
-      // fallback: simple regex parser if model adds text
       const match = text.match(/\[([\s\S]*)\]/);
       if (match) {
         try { picks = JSON.parse(match[0]); } catch { picks = []; }
       }
     }
 
-    // fallback if LLM gives nothing
-    if (!Array.isArray(picks) || picks.length === 0) {
+    if (!Array.isArray(picks) || !picks.length) {
       picks = dishes.slice(0, topN).map(d => ({
         title: d.title,
         partner: d.partner,
