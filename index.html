@@ -45,10 +45,9 @@
 
   <script src="app.js" defer></script>
   <script>
-    // 🔐 Redirect logic
+    // Redirect based on login/prefs
     const user = JSON.parse(localStorage.getItem('user') || 'null');
     const prefs = JSON.parse(localStorage.getItem('prefs') || 'null');
-
     if (!user) window.location.href = 'login.html';
     else if (!prefs) window.location.href = 'preferences.html';
     else {
@@ -61,3 +60,4 @@
   </script>
 </body>
 </html>
+
