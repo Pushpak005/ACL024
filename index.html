@@ -45,7 +45,7 @@
 
   <script src="app.js" defer></script>
   <script>
-    // Redirect based on login/prefs
+    // ✅ Redirect if not logged in
     const user = JSON.parse(localStorage.getItem('user') || 'null');
     const prefs = JSON.parse(localStorage.getItem('prefs') || 'null');
     if (!user) window.location.href = 'login.html';
@@ -60,4 +60,3 @@
   </script>
 </body>
 </html>
-
