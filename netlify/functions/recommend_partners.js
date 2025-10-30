@@ -18,25 +18,29 @@ export const handler = async (event) => {
           description: d.description || "",
           price: d.price || "",
           partner: p.name,
-          city: p.city || "",
+          city: p.city || ""
         });
       }
     }
 
-    // Compose DeepSeek prompt
+    // Build prompt for DeepSeek (be concise)
     const prompt = `
-User details:
+User preferences:
 - Diet: ${prefs.diet || "unknown"}
 - City: ${prefs.city || "unknown"}
-- Health metrics: HR ${wearable.heartRate || "--"}, BP ${wearable.bp || "--"}, Calories ${wearable.calories || "--"}
+Health vitals:
+- Heart rate: ${wearable.heartRate || "--"}
+- Blood pressure: ${wearable.bp || "--"}
+- Activity level: ${wearable.activityLevel || "--"}
 
-Partner dishes:
+Available partner dishes:
 ${all.map(a => `• ${a.title} (${a.partner}, ${a.city}) – ${a.description}`).join("\n")}
 
-Please select 5–10 dishes that are most suitable for the user's current health and preferences.
-Return JSON array: [{title, reason, partner, city, price}]
+Select up to 8 dishes from the available partner dishes that are most suitable for the user given their health vitals and preferences.
+Return a valid JSON array with objects: { "title": string, "reason": string, "partner": string, "city": string, "price": number|null }
 `;
 
+    // Call DeepSeek
     const resp = await fetch("https://api.deepseek.com/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -46,24 +50,24 @@ Return JSON array: [{title, reason, partner, city, price}]
       body: JSON.stringify({
         model: "deepseek-chat",
         messages: [{ role: "user", content: prompt }],
-        temperature: 0.4
+        temperature: 0.35
       })
     });
 
     const data = await resp.json();
-    let text = data.choices?.[0]?.message?.content || "";
+    const text = data.choices?.[0]?.message?.content || "";
     let picks = [];
-    try { picks = JSON.parse(text); } catch(_) {}
-
-    if(!Array.isArray(picks) || !picks.length){
-      // fallback: pick first few partner dishes
-      picks = all.slice(0,6).map(x=>({...x, reason:"Heuristic suggestion (DeepSeek offline)."}));
+    try { picks = JSON.parse(text); } catch (e) {
+      // parse failed — return empty picks so frontend does fallback
+      picks = [];
     }
 
-    return { statusCode: 200, body: JSON.stringify({ picks }) };
+    // Validate picks array shape
+    if (!Array.isArray(picks)) picks = [];
 
-  } catch (e) {
-    console.error("recommend_partners (DeepSeek) fail", e);
-    return { statusCode: 500, body: JSON.stringify({ error: e.message }) };
+    return { statusCode: 200, body: JSON.stringify({ picks }) };
+  } catch (err) {
+    console.error('recommend_partners error', err);
+    return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
   }
 };
