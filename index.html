@@ -70,7 +70,7 @@
 
   <script src="app.js" defer></script>
   <script>
-    // ✅ Gating: user & preferences must exist
+    // gating: login + prefs
     const user = JSON.parse(localStorage.getItem('user') || 'null');
     const prefs = JSON.parse(localStorage.getItem('prefs') || 'null');
 
