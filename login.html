@@ -3,32 +3,20 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Login • Healthy Diet</title>
+  <title>Login</title>
   <link rel="stylesheet" href="styles.css"/>
 </head>
-<body class="bg">
-  <div class="phone">
-    <header class="topbar">
-      <div class="topbar-left">
-        <span class="avatar">👋</span>
-        <span class="uname">Welcome</span>
-      </div>
-    </header>
-
-    <main class="pad">
-      <h2>Welcome to Healthy Diet</h2>
-      <p class="muted">Please enter your name to continue.</p>
-      <div class="card">
-        <input id="name" placeholder="Your name" style="width:100%;padding:8px;"/>
-        <button id="loginBtn" class="pill w100" style="margin-top:10px;">Continue</button>
-      </div>
-    </main>
+<body class="bg center">
+  <div class="card p-4">
+    <h2>Welcome</h2>
+    <p>Enter your name to continue</p>
+    <input id="username" class="input" placeholder="Your Name"/>
+    <button class="pill w100" id="loginBtn">Continue</button>
   </div>
-
   <script>
-    document.getElementById('loginBtn').onclick = ()=>{
-      const name = document.getElementById('name').value.trim();
-      if(!name){ alert('Please enter your name'); return; }
+    document.getElementById('loginBtn').onclick = () => {
+      const name = document.getElementById('username').value.trim();
+      if (!name) return alert('Please enter your name');
       localStorage.setItem('user', JSON.stringify({ name }));
       window.location.href = 'preferences.html';
     };
