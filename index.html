@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Healthy Diet • Dashboard</title>
+  <title>Healthy Diet Dashboard</title>
   <link rel="stylesheet" href="styles.css"/>
 </head>
 <body class="bg">
@@ -11,22 +11,14 @@
     <header class="topbar">
       <div class="topbar-left">
         <span class="avatar">🧑‍⚕️</span>
-        <span class="uname" id="helloName">Hi</span>
+        <span id="helloName" class="uname">Hi</span>
       </div>
       <a href="preferences.html" class="icon-btn">⚙️</a>
     </header>
 
     <main class="content">
-      <section class="panel brand">
-        <h1>Healthy Diet</h1>
-        <p>Simple • Friendly • Fast</p>
-        <div id="clock">--:--</div>
-      </section>
-
       <section class="panel">
         <h3>Your Health Snapshot</h3>
-        <div id="riskBanner" class="banner" hidden>⚠️ High heart rate or BP detected. Prefer light meals.</div>
-
         <div class="metrics">
           <div class="metric"><div class="label">Heart Rate</div><div class="value" id="m-hr">--</div></div>
           <div class="metric"><div class="label">Steps</div><div class="value" id="m-steps">--</div></div>
@@ -42,31 +34,24 @@
       </section>
 
       <section class="panel">
-        <div class="row-between">
-          <h3>Today's Picks</h3>
-          <button class="linklike" id="reshuffle">More Picks ▾</button>
-        </div>
+        <h3>Today's Picks</h3>
         <ul id="cards" class="cards"></ul>
         <div class="nav-ctr">
-          <button class="chip" id="prevBtn">◀ Prev</button>
           <button class="pill" id="getPicks">✨ Get Picks</button>
-          <button class="chip" id="nextBtn">Next ▶</button>
         </div>
-        <p class="foot">Lifestyle guidance only. Not clinical advice.</p>
       </section>
     </main>
   </div>
 
   <script src="app.js" defer></script>
   <script>
-    // 🚦 Redirect logic
+    // 🔐 Redirect logic
     const user = JSON.parse(localStorage.getItem('user') || 'null');
     const prefs = JSON.parse(localStorage.getItem('prefs') || 'null');
-    if (!user) {
-      window.location.href = 'login.html';
-    } else if (!prefs || !prefs.diet) {
-      window.location.href = 'preferences.html';
-    } else {
+
+    if (!user) window.location.href = 'login.html';
+    else if (!prefs) window.location.href = 'preferences.html';
+    else {
       document.getElementById('helloName').textContent = user.name || 'Guest';
       window.__APP_PREFS = prefs;
       window.addEventListener('DOMContentLoaded', () => {
