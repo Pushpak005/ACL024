@@ -1,14 +1,11 @@
 // netlify/functions/recommend_similar.js
-// Smart simple recommender using DeepSeek chat
-// Picks the most similar dishes from partner menus (e.g., if Tofu missing -> Paneer)
-
-import fetch from "node-fetch";
+// Smart recommender using DeepSeek chat API (native fetch version, no node-fetch)
 
 const DEEPSEEK_BASE = "https://api.deepseek.com/v1";
-const MODEL = "deepseek-chat"; // change if your model name differs
+const MODEL = "deepseek-chat";
 
 async function deepseekChat(prompt) {
-  const resp = await fetch(`${DEEPSEEK_BASE}/chat/completions`, {
+  const res = await fetch(`${DEEPSEEK_BASE}/chat/completions`, {
     method: "POST",
     headers: {
       "Authorization": `Bearer ${process.env.DEEPSEEK_API_KEY}`,
@@ -21,25 +18,26 @@ async function deepseekChat(prompt) {
       max_tokens: 800
     })
   });
-  const data = await resp.json();
-  return data.choices?.[0]?.message?.content || "";
+  const j = await res.json();
+  return j.choices?.[0]?.message?.content || "";
 }
 
 export const handler = async (event) => {
   try {
     const body = JSON.parse(event.body || "{}");
-    const { wearable = {}, prefs = {}, partners = [], seedDish = "", topN = 6 } = body;
+    const { wearable = {}, prefs = {}, partners = [], topN = 6 } = body;
 
     // Flatten partner dishes
     const dishes = [];
     for (const p of partners || []) {
-      for (const d of p.dishes || []) {
+      const dishList = p.dishes || p.menu || p.items || [];
+      for (const d of dishList) {
         dishes.push({
-          title: d.title || "",
-          description: d.description || "",
+          title: d.title || d.name || "",
+          description: d.description || d.desc || "",
           price: d.price || "",
           partner: p.name || "",
-          city: p.city || "",
+          city: p.city || prefs.city || "Pune"
         });
       }
     }
@@ -47,50 +45,40 @@ export const handler = async (event) => {
     if (!dishes.length)
       return { statusCode: 200, body: JSON.stringify({ picks: [] }) };
 
-    // Build smart DeepSeek prompt
     const prompt = `
-User preferences:
-- Diet: ${prefs.diet || "unknown"}
-- City: ${prefs.city || "unknown"}
-- Health: HR=${wearable.heartRate || "--"}, BP=${wearable.bp || "--"}, Activity=${wearable.activityLevel || "--"}
-
-Goal:
-Recommend up to ${topN} dishes ONLY from the list below that are healthy and suitable for the user's context.
-If tofu is not available, recommend paneer or other similar protein-rich items.
-If chicken missing, suggest egg/fish alternatives.
-Return strictly JSON array: [{"title":"","partner":"","city":"","price":"","reason":""}]
----
+User Diet: ${prefs.diet}, City: ${prefs.city}, HR ${wearable.heartRate}, BP ${wearable.bp}, Activity ${wearable.activityLevel}.
+From the dishes listed below, recommend up to ${topN} options that best fit the user.
+If tofu missing, suggest paneer or similar protein dish.
+Return pure JSON array only:
+[{"title":"","partner":"","city":"","price":"","reason":""}]
 
 Available dishes:
-${dishes.map((d,i)=>`${i+1}. ${d.title} - ${d.partner} - ${d.city} - ${d.description || ""}`).join("\n")}
+${dishes.map(d => `${d.title} - ${d.partner} - ${d.city} - ${d.description}`).join("\n")}
 `;
 
     const text = await deepseekChat(prompt);
 
+    // JSON recovery
     let picks = [];
-    try {
-      picks = JSON.parse(text);
-    } catch {
-      const match = text.match(/\[([\s\S]*)\]/);
-      if (match) {
-        try { picks = JSON.parse(match[0]); } catch { picks = []; }
-      }
+    const jsonMatch = text.match(/\[[\s\S]*\]/);
+    if (jsonMatch) {
+      try { picks = JSON.parse(jsonMatch[0]); } catch {}
     }
-
     if (!Array.isArray(picks) || !picks.length) {
       picks = dishes.slice(0, topN).map(d => ({
         title: d.title,
         partner: d.partner,
         city: d.city,
         price: d.price,
-        reason: "Fallback: top partner dish."
+        reason: "Fallback: partner dish."
       }));
     }
 
+    picks = picks.filter(p => p.title && p.partner).slice(0, topN);
     return { statusCode: 200, body: JSON.stringify({ picks }) };
 
-  } catch (err) {
-    console.error("recommend_similar error:", err);
-    return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
+  } catch (e) {
+    console.error("DeepSeek error:", e);
+    return { statusCode: 500, body: JSON.stringify({ error: e.message }) };
   }
 };
