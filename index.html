@@ -8,6 +8,7 @@
 </head>
 <body class="bg">
   <div class="phone">
+    <!-- Header -->
     <header class="topbar">
       <div class="topbar-left">
         <span class="avatar">🧑‍⚕️</span>
@@ -16,7 +17,10 @@
       <a href="preferences.html" class="icon-btn">⚙️</a>
     </header>
 
+    <!-- Main Content -->
     <main class="content">
+
+      <!-- Health Section -->
       <section class="panel">
         <h3>Your Health Snapshot</h3>
         <div class="metrics">
@@ -33,6 +37,7 @@
         </div>
       </section>
 
+      <!-- Today's Picks -->
       <section class="panel">
         <h3>Today's Picks</h3>
         <ul id="cards" class="cards"></ul>
@@ -40,9 +45,20 @@
           <button class="pill" id="getPicks">✨ Get Picks</button>
         </div>
       </section>
+
     </main>
   </div>
 
+  <!-- 🔹 Restaurant Modal (for “Order Now”) -->
+  <div id="partnerModal" class="modal" style="display:none;align-items:center;justify-content:center;">
+    <div class="modal-content" style="background:#fff;padding:20px;border-radius:12px;width:90%;max-width:400px;max-height:80vh;overflow-y:auto;">
+      <h3>Available Restaurants</h3>
+      <div id="partnerList" class="mt8">Loading...</div>
+      <button class="pill w100 mt8" onclick="closePartnerModal()">Close</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
   <script src="app.js" defer></script>
   <script>
     // ✅ Redirect if not logged in
